@@ -1,0 +1,14 @@
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+#title-container{
+	text-align: center;
+	width: 100%;
+}
+
+td{
+	padding: 1rem;
+}
+
+thead{
+	font-weight: 900;
+}
