@@ -1,4 +1,4 @@
-var rawbody = require('raw-body');
+const sqlFunctions = require('./database');
 
 function hasSql(value) {
 
@@ -35,16 +35,19 @@ function hasSql(value) {
 }
 
 function middleware(req, res, next) {
+	console.log("Entered middleware");
 
-	console.log("Entered middleware")
+	// CHECKING IF IP ADDRESS IS BLOCKED
+	sqlFunctions.checkIfIpAddressIsBlocked(req.ip);
 
-	console.log("Has sql: " + hasSql(req.body.username));
 
 	if(hasSql(req.body.username) || hasSql(req.body.password)){
 		console.log("SQL Injection attack detected!")
 
 		// BLOCKING IP ADDRESS
-
+		console.log("Blocking IP Address....")
+		console.log(req.ip)
+		sqlFunctions.blockIpAddress(req.ip);
 	}
 	else{
 		next();

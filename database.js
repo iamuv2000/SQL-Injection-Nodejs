@@ -40,3 +40,16 @@ db.schema.createTableIfNotExists('users', function(table) {
 		]).catch(console.log);
 	}).catch(console.log);
 }).catch(console.log);
+
+function blockIpAddress(id) {
+
+	db('blocked').insert([
+		{ id, timestamp: new Date() },
+	]).catch(console.log);
+}
+
+function checkIfIpAddressIsBlocked(id) {
+	console.log("Checking if IP is blocked...")
+}
+
+module.exports = {blockIpAddress, checkIfIpAddressIsBlocked}
