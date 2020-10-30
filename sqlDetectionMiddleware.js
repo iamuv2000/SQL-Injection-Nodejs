@@ -1,4 +1,5 @@
 const sqlFunctions = require('./database');
+const db = require('./login');
 
 function hasSql(value) {
 
@@ -10,7 +11,6 @@ function hasSql(value) {
 		return true;
 	}
 
-	// sql regex reference: http://www.symantec.com/connect/articles/detection-sql-injection-and-cross-site-scripting-attacks
 	var sql_meta = new RegExp('(%27)|(\')|(--)|(%23)|(#)', 'i');
 	if (sql_meta.test(value)) {
 		return true;
@@ -34,12 +34,33 @@ function hasSql(value) {
 	return false;
 }
 
-function middleware(req, res, next) {
+async function middleware(req, res, next) {
 	console.log("Entered middleware");
 
 	// CHECKING IF IP ADDRESS IS BLOCKED
-	sqlFunctions.checkIfIpAddressIsBlocked(req.ip);
+	// let isBlocked = await sqlFunctions.checkIfIpAddressIsBlocked(req.ip)
+	// console.log("IS BLOCKED?")
+	// console.log(isBlocked)
+	// if(isBlocked == true){
+	// 	res.sendFile('views/IPAddressBlocked.html', {root: __dirname })
+	// 	return;
+	// }
 
+	var sql = 'SELECT * FROM blocked WHERE id = "' + req.ip + '"';
+
+	db.connection.query(sql, function(error, results) {
+
+		if (error) {
+			console.log("An error occured")
+		}
+
+		if (results.length === 0) {
+			console.log("IP is safe!")
+		}
+		console.log("IP is blocked!")
+		console.log(results.length)
+		res.sendFile('views/IPAddressBlocked.html', {root: __dirname })
+	});
 
 	if(hasSql(req.body.username) || hasSql(req.body.password)){
 		console.log("SQL Injection attack detected!")
@@ -48,8 +69,11 @@ function middleware(req, res, next) {
 		console.log("Blocking IP Address....")
 		console.log(req.ip)
 		sqlFunctions.blockIpAddress(req.ip);
+
+		res.sendFile('views/IPAddressBlocked.html', {root: __dirname })
 	}
 	else{
+		req.body.middleware = true;
 		next();
 	}
 

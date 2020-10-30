@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var serverStatic = require('serve-static');
 var app = express();
-var db = require('./database');
+var db = require('./login');
+var crypto = require('crypto');
 
 const sqlInjectionDetection = require('./sqlDetectionMiddleware');
 
@@ -54,7 +55,10 @@ app.post('/login-secure', sqlInjectionDetection ,function(req, res, next) {
 
 	var username = req.body.username;
 	var password = req.body.password;
-	var sql = 'SELECT * FROM users WHERE username = "' + username + '" AND password = "' + password + '"';
+	var hash = crypto.createHash('md5').update(password).digest('hex');
+	console.log(hash)
+
+	var sql = 'SELECT * FROM userssecure WHERE username = "' + username + '" AND password = "' + hash + '"';
 
 	db.connection.query(sql, function(error, results) {
 
@@ -66,8 +70,13 @@ app.post('/login-secure', sqlInjectionDetection ,function(req, res, next) {
 		if (results.length === 0) {
 			return res.status(400).send('Invalid username or password.')
 		}
-		console.log(results)
-		res.status(200).send(results);
+		if(req.body.middleware){
+			res.sendFile('views/employees.html', {root: __dirname })
+
+		}	
+		else{
+			res.status(200).send(results);
+		}	
 	});
 });
 

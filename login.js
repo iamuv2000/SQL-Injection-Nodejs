@@ -6,7 +6,7 @@ var config = {
 };
 
 // Connect to the MySQL database using knex.
-var db = require('knex')({
+var db = module.exports = require('knex')({
 	client: 'mysql',
 	connection: config
 });
@@ -40,29 +40,3 @@ db.schema.createTableIfNotExists('users', function(table) {
 		]).catch(console.log);
 	}).catch(console.log);
 }).catch(console.log);
-
-function blockIpAddress(id) {
-
-	db('blocked').insert([
-		{ id, timestamp: new Date() },
-	]).catch(console.log);
-}
-
-async function checkIfIpAddressIsBlocked(id) {
-	console.log("Checking if IP is blocked...")
-	var sql = 'SELECT * FROM blocked WHERE id = "' + id + '"';
-	try{
-		let status =  await db.connection.query(sql, function(error, results) {
-			return results
-		});
-	
-		return status
-	}
-	catch(e){
-		return false;
-	}
-	
-
-}
-
-module.exports = {blockIpAddress, checkIfIpAddressIsBlocked}
