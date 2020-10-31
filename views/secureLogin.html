@@ -1,17 +1,109 @@
 <html>
-<head>
-	<title>SQL Injection</title>
-</head>
-<body>
-	<h1>SECURE LOGIN</h1>
-	<!--
-		Try some special SQL characters to see if this form is vulnerable.
-	-->
-	<form action="/login-secure" method="post">
-		<input type="text" name="username" placeholder="Username">
-		<input type="password" name="password" placeholder="Password">
-		<input type="submit" value="Login">
-	</form>
+    <head>
+        <title>Van Nelle Login </title>
+        <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+  body {
+    font-family: Arial;
+    color: white;
+    background-color:#101010;
+  }
+ 
+  .split {
+    height: 60%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    margin-top:150px;
+  margin-left:280px;
+  margin-right:280px;
 
-</body>
+  
+  
+  }
+  
+  .left {
+    left: 0;
+    background-color: #f5f5f5;
+  width: 600px;
+  }
+  
+  .right {
+    right: 0;
+    background-color: whitesmoke;
+  width: 600px;
+ 
+  height: 60%;
+  }
+  
+  
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .centered img {
+    width: 150px;
+    border-radius: 50%;
+  }
+  th{
+      color: #101010;
+      
+  }
+  h1{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 50px;
+  }
+  </style>
+    </head>
+    <body>
+        <h1 align="center" ><b>Van Nelle Factory (Secure)</b></h1>
+      
+        <div class="split left">
+            <div class="centered">              
+            </div>
+          </div>
+        <div class="container mt-3"  id="d1">
+            <div class="split left">
+                <div class="centered">
+                    
+            <form action="/login-secure" method="post">
+           <table>
+                <thead><th><h5>Enter Login Credentials:</h5></th></thead>
+                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                <tr>
+                    <td><div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Username:</span></div>
+                    <input type="text" name="username" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td><div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Password:</span></div>
+                    <input type="password" name="password" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" name="login" value="Login" class="btn btn-success"></td>
+                </tr>
+            </table>
+        </form>
+        </div></div></div>
+    </body>
 </html>

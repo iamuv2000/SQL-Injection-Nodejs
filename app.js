@@ -44,18 +44,24 @@ app.post('/login' , function(req, res, next) {
 		if (results.length === 0) {
 			return res.status(400).send('Invalid username or password.')
 		}
-		console.log(results)
-		res.status(200).send(results);
+		if (username === '" or ""="') {
+			console.log(results)
+			res.status(200).send(results);		}
+		else{
+			res.sendFile('views/employees.html', {root: __dirname })
+		}
+		
 	});
 });
 
-app.post('/login-secure', sqlInjectionDetection ,function(req, res, next) {
+app.post('/login-secure' , sqlInjectionDetection, function(req, res, next) {
 
 	console.log(req.ip)
 
 	var username = req.body.username;
 	var password = req.body.password;
 	var hash = crypto.createHash('md5').update(password).digest('hex');
+	console.log(username)
 	console.log(hash)
 
 	var sql = 'SELECT * FROM userssecure WHERE username = "' + username + '" AND password = "' + hash + '"';
@@ -70,13 +76,7 @@ app.post('/login-secure', sqlInjectionDetection ,function(req, res, next) {
 		if (results.length === 0) {
 			return res.status(400).send('Invalid username or password.')
 		}
-		if(req.body.middleware){
-			res.sendFile('views/employees.html', {root: __dirname })
-
-		}	
-		else{
-			res.status(200).send(results);
-		}	
+		res.sendFile('views/employees.html', {root: __dirname })
 	});
 });
 

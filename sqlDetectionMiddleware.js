@@ -57,9 +57,11 @@ async function middleware(req, res, next) {
 		if (results.length === 0) {
 			console.log("IP is safe!")
 		}
-		console.log("IP is blocked!")
-		console.log(results.length)
-		res.sendFile('views/IPAddressBlocked.html', {root: __dirname })
+		else{
+			console.log("IP is blocked!")
+			console.log(results.length)
+			res.sendFile('views/IPAddressBlocked.html', {root: __dirname })
+		}
 	});
 
 	if(hasSql(req.body.username) || hasSql(req.body.password)){
