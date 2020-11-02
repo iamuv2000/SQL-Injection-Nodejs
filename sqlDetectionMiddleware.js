@@ -37,15 +37,6 @@ function hasSql(value) {
 async function middleware(req, res, next) {
 	console.log("Entered middleware");
 
-	// CHECKING IF IP ADDRESS IS BLOCKED
-	// let isBlocked = await sqlFunctions.checkIfIpAddressIsBlocked(req.ip)
-	// console.log("IS BLOCKED?")
-	// console.log(isBlocked)
-	// if(isBlocked == true){
-	// 	res.sendFile('views/IPAddressBlocked.html', {root: __dirname })
-	// 	return;
-	// }
-
 	var sql = 'SELECT * FROM blocked WHERE id = "' + req.ip + '"';
 
 	db.connection.query(sql, function(error, results) {
